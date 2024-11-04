@@ -4,7 +4,6 @@ import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 export default function ErrorPage(){
     const error = useRouteError();
     console.log(error)
-    const status = isRouteErrorResponse(error) ? error.status : null;
     return(
         <>
             <Typography variant="h1" color="primary">
