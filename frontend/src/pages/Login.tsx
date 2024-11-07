@@ -9,7 +9,12 @@ import Button from '@mui/material/Button'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import "../index.css"
 import { useNavigate } from 'react-router-dom'
+//Importamos el useDispatch del react-redux
+import { useDispatch} from 'react-redux'
+//Importamos las acciones que están en el fichero authSlice.ts
+import { authActions } from '../store/authSlice';
 function Login() {
+  const dispatch = useDispatch()
   const [data, setData] = useState({ usuario: '', contraseña: '', showAlert: false, alertSuccess: false })
   const bduser = 'alister';
   const bdpasswd = '1234';
@@ -33,6 +38,10 @@ function Login() {
   const handleSubmit = (e: any) => {
     if (data.usuario == bduser && data.contraseña == bdpasswd) {
       handleAlertSuccess();
+      dispatch(authActions.login({
+        name: data.usuario, //data.usuario es el nombre de usuario que ha ingresado el usuario
+        rol: 'administrador'
+       }))
     } else {
       handleAlertError();
 
@@ -69,7 +78,7 @@ function Login() {
           <Grid container alignContent={'center'} alignItems={'center'}>
             <Grid size={12}>
               <Typography variant="h4">Sistema de acceso</Typography>
-              <AccountCircleIcon class="tamaño"></AccountCircleIcon>
+              <AccountCircleIcon fontSize='large'></AccountCircleIcon>
             </Grid>
             <Grid padding={2} size={12}>
               <TextField label="Usuario" required fullWidth value={data.usuario} onChange={handleChangeUsuario}></TextField>
