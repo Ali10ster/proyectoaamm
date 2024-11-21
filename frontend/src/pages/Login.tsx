@@ -14,6 +14,7 @@ import { useDispatch} from 'react-redux'
 //Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
 function Login() {
+
   const dispatch = useDispatch()
   const [data, setData] = useState({ usuario: '', contraseña: '', showAlert: false, alertSuccess: false })
   const bduser = 'alister';
@@ -36,16 +37,19 @@ function Login() {
   }
 
   const handleSubmit = (e: any) => {
-    if (data.usuario == bduser && data.contraseña == bdpasswd) {
-      handleAlertSuccess();
-      dispatch(authActions.login({
-        name: data.usuario, //data.usuario es el nombre de usuario que ha ingresado el usuario
-        rol: 'administrador'
-       }))
-    } else {
-      handleAlertError();
-
-    }
+       fetch(`http://localhost:3030/login?user=${data.usuario}&password=${data.contraseña}`)
+       .then(response => response.json())
+       .then (response => {
+       if (response.data.length !== 0){
+           dispatch(authActions.login({
+               name: response.data.nombre,
+               rol: response.data.rol
+           }))
+           navigate('/Home');
+       }else {
+        handleAlertError();
+      }
+      })
     e.preventDefault();
 
 
@@ -112,20 +116,6 @@ function Login() {
     </>
   );
 }
-async function isVerifiedUser () {
-  fetch(`http://localhost:3030/login?user=${data.user}&password=${data.passwd}`)
-  .then(response => response.json())
-  .then (response => {
-  console.log('Lo que nos llega de la base de datos: ')
-  console.log(response.data)
-  if (response.data.length !== 0){
- //Si hay datos es que el usuario y contraseña son los correctos. Hago el dispatch y el
- //navigate
-  } else{
- //Si no, realizo la lógica para alertar al usuario con usuario/contraseña son incorrectas
-  }
- })
- }
  
 
 export default Login

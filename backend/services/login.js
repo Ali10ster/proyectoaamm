@@ -4,12 +4,15 @@ const helper = require('../helper')
 //Realizamos la query a la base de datos buscando el nombre y rol pertenecientes al login y password proporcionados
 async function getUserData (user, password) {
     const rows = await db.query(`
-        select nombre, rol
+        select nombre, rol 
         from usuarios
         where login = '${user}'
-          and password = '${password}'
+        and password = '${password}' 
+
     `)
+
     const data = helper.emptyOrRows(rows[0])
+
     return {
         data 
     }
