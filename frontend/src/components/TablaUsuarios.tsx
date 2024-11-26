@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid2';
 import { Box, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 
-export default function Dashboard() {
+export default function GestionUsuarios() {
     /**
      * Definicion de variables y tipos
      */
@@ -23,16 +23,16 @@ export default function Dashboard() {
     interface itemType {
         id?: number
         nombre: string
-        marca: string
-        tipo: string
-        precio: number
+        login: string
+        password: string
+        rol: string
     }
 
     const itemInitialState: itemType = {
         nombre: '',
-        marca: '',
-        tipo: '',
-        precio: 0.0
+        login: '',
+        password: '',
+        rol: ''
     }
 
     const [item, setItem] = useState(itemInitialState)
@@ -51,27 +51,16 @@ export default function Dashboard() {
      * Funciones relacionadas a los datos
      */
     async function getData() {
-        fetch(`http://localhost:3030/getItems`)
+        fetch(`http://localhost:3030/getItemsUsers`)
             .then(response => response.json())
             .then(response => {
                 setTableData(response.data)
             })
     }
 
-    async function handleDeleteItem(row: itemType) {
-        alert('Datos eliminados con éxito')
-        fetch(`http://localhost:3030/deleteItem?id=${row.id}`)
-            .then(response => response.json())
-            .then(response => {
-                if (response === 1) {
-                    cargarDatosTabla()
-                }
-            })
-    }
-
     async function handleInsertItem(e: any) {
         e.preventDefault()
-        fetch(`http://localhost:3030/addItem?nombre=${item.nombre}&marca=${item.marca}&tipo=${item.tipo}&precio=${item.precio})`)
+        fetch(`http://localhost:3030/addItemUsers?nombre=${item.nombre}&login=${item.login}&password=${item.password}&rol=${item.rol}`)
             .then(response => response.json())
             .then(response => {
                 if (response === 1) {
@@ -97,24 +86,24 @@ export default function Dashboard() {
         })
     }
 
-    const handleChangeMarca = (e: any) => {
+    const handleChangeLogin = (e: any) => {
         setItem({
             ...item,
-            marca: e.target.value
+            login: e.target.value
         })
     }
 
-    const handleChangeType = (e: any) => {
+    const handleChangePassword = (e: any) => {
         setItem({
             ...item,
-            tipo: e.target.value
+            password: e.target.value
         })
     }
 
-    const handleChangePrecio = (e: any) => {
+    const handleChangeRol = (e: any) => {
         setItem({
             ...item,
-            precio: parseFloat(e.target.value)
+            rol: e.target.value
         })
     }
 
@@ -132,44 +121,38 @@ export default function Dashboard() {
                         <TextField required label='Nombre' onChange={handleChangeName} value={item.nombre}/>
                     </Grid>
                     <Grid>
-                        <TextField required label='Marca' onChange={handleChangeMarca} value={item.marca}/>
+                        <TextField required label='Usuario' onChange={handleChangeLogin} value={item.login}/>
                     </Grid>
                     <Grid>
-                        <TextField required label='Tipo' onChange={handleChangeType} value={item.tipo}/>
+                        <TextField required label='Contraseña' onChange={handleChangePassword} value={item.password}/>
                     </Grid>
                     <Grid>
-                        <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio}/>
+                        <TextField required label='rol' onChange={handleChangeRol} value={item.rol}/>
                     </Grid>
                     <Button variant='contained' type="submit">
-                        Insertar dato
+                        Insertar usuario
                     </Button>
                 </Grid>
             </Box>
             <Grid container direction={'column'} spacing={2} sx={{ marginTop: { xs: '10px' } }} >
                 <Grid sx={{ maxWidth: '100%', overflowX: 'auto' }}>
                     <TableContainer >
-                        <Table aria-label='Tabla de colección'>
+                        <Table aria-label='Tabla de Usuarios'>
                             <TableHead>
                                 <TableRow>
                                     <TableCell >Nombre</TableCell>
-                                    <TableCell>Marca</TableCell>
-                                    <TableCell>Tipo</TableCell>
-                                    <TableCell>Precio</TableCell>
-                                    <TableCell>Eliminar</TableCell>
+                                    <TableCell>Usuario</TableCell>
+                                    <TableCell>Contraseña</TableCell>
+                                    <TableCell>Rol</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {tableData.map((row: itemType) => (
                                     <TableRow key={row.id}>
                                         <TableCell>{row.nombre}</TableCell>
-                                        <TableCell>{row.marca}</TableCell>
-                                        <TableCell>{row.tipo}</TableCell>
-                                        <TableCell>{row.precio}</TableCell>
-                                        <TableCell>
-                                            <Button onClick={() => handleDeleteItem(row)}>
-                                                <DeleteForever />
-                                            </Button>
-                                        </TableCell>
+                                        <TableCell>{row.login}</TableCell>
+                                        <TableCell>{row.password}</TableCell>
+                                        <TableCell>{row.rol}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -6,8 +6,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
 import Typography  from '@mui/material/Typography';
-import User from '@mui/icons-material/AccountCircle';
-import Admin from '@mui/icons-material/AddModerator';
+import User from '@mui/icons-material/Adb';
+import Admin from '@mui/icons-material/AdminPanelSettings';
+import Invitado from '@mui/icons-material/InsertEmoticon'
 import Drawer from '@mui/material/Drawer';
 import HomeIcon from '@mui/icons-material/Home';
 import ReportIcon from '@mui/icons-material/Article';
@@ -16,6 +17,7 @@ import List  from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider  from '@mui/material/Divider';
 import HelpIcon from '@mui/icons-material/Info';
+import { Link } from 'react-router-dom';
 import { authActions } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
@@ -25,8 +27,9 @@ import { useEffect } from 'react';
 
 export default function menu({ nombre }: { nombre: string }){
     const[open, setOpen] = useState(false)
-    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
 
     const userData = useSelector((state: RootState) => state.authenticator)
     const isLogged = userData.isAutenticated
@@ -48,32 +51,28 @@ export default function menu({ nombre }: { nombre: string }){
         dispatch(authActions.logout())
         navigate('/');
     }
-
-    const goHome = () =>{
-        navigate('/home');
-    }
-
-    const goReport = () =>{
-        navigate('/reports');
-    }
     const DrawerList =(
         <List>
             <ListItem>
-                <IconButton onClick={goHome}>
+                <Link to='/home'>
+                <IconButton>
                     <HomeIcon/>
                     <Typography>
                         Home
                     </Typography>
-                </IconButton>    
+                </IconButton>
+                </Link>    
             </ListItem>
             <Divider/>
             <ListItem>
-                <IconButton onClick={goReport}>
+                <Link to='/reports'>
+                <IconButton>
                     <ReportIcon />
                     <Typography>
                         Reports
                     </Typography>
                 </IconButton>
+                </Link>
             </ListItem>
             <Divider/>
             <ListItem>
@@ -83,6 +82,17 @@ export default function menu({ nombre }: { nombre: string }){
                         Ayuda
                     </Typography>
                 </IconButton>
+            </ListItem>
+            <Divider/>
+            <ListItem>
+                <Link to='/gestionusuarios'>
+                <IconButton>
+                    <HomeIcon/>
+                    <Typography>
+                        Gestion Usuarios
+                    </Typography>
+                </IconButton>
+                </Link>    
             </ListItem>
             <Divider/>
             <ListItem>
@@ -115,7 +125,9 @@ export default function menu({ nombre }: { nombre: string }){
                                <Typography>
                                     {user}
                                 </Typography>
-                                {role === 'admin' ? <Admin/>: <User/>}
+                                {role === 'admin' ? <Admin/>: <User/> }
+                                
+                                
                             </Grid>
                         </Grid>
                    </AppBar>
