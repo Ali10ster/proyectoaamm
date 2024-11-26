@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-import Typography from '@mui/material/Typography'
-
-export default function Reports() {
-    return(
-    <>
-    <Typography>Página Reports Alister</Typography>
-=======
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Menu from "../components/Menu.tsx";
@@ -41,7 +33,6 @@ function Reports() {
         <br /><br />
         {showCollection ? <InformeColeccion data={data} /> : null}
       </Container>
->>>>>>> Stashed changes
     </>
   );
 }
