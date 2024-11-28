@@ -91,9 +91,11 @@ function Login() {
             <Grid padding={2} size={12}>
               <TextField type='password' label="Contraseña" required fullWidth value={data.contraseña} onChange={handleChangeContraseña}></TextField>
             </Grid>
+            <Grid padding={2} size={12}>
             <Tooltip title="Acceder" placement="bottom" arrow>
-                <Button variant="contained" type="submit">ACCEDER</Button>
+                <Button variant="contained" fullWidth type="submit">ACCEDER</Button>
               </Tooltip>
+            </Grid>
             <Grid>
               {data.showAlert === true && data.alertSuccess === true ?
                 <Alert severity="success">
