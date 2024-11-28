@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch} from 'react-redux'
 //Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
+import { Tooltip } from '@mui/material'
 function Login() {
 
   const dispatch = useDispatch()
@@ -90,11 +91,9 @@ function Login() {
             <Grid padding={2} size={12}>
               <TextField type='password' label="Contraseña" required fullWidth value={data.contraseña} onChange={handleChangeContraseña}></TextField>
             </Grid>
-            <Grid padding={2} size={12}>
-              <Button variant="contained" type='submit' fullWidth>Acceder</Button>
-
-
-            </Grid>
+            <Tooltip title="Acceder" placement="bottom" arrow>
+                <Button variant="contained" type="submit">ACCEDER</Button>
+              </Tooltip>
             <Grid>
               {data.showAlert === true && data.alertSuccess === true ?
                 <Alert severity="success">

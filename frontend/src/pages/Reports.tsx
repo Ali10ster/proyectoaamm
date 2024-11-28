@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Menu from "../components/Menu.tsx";
 import InformeColeccion from "../components/InformeColeccion.tsx";
+import { Tooltip } from "@mui/material";
 import { useState } from "react";
 
 interface itemtype {
@@ -27,9 +28,11 @@ function Reports() {
 
   return (
     <>
-      <Menu nombre="Informes" />
+      <Menu page="Informes" />
       <Container sx={{ mt: 5, textAlign: "center" }}>
-        <Button variant="contained" onClick={getItems} color="secondary">Imprimir informe</Button>
+        <Tooltip title="Imprimir informe" placement="bottom" arrow>
+          <Button variant="contained" onClick={getItems} color="primary">Imprimir informe</Button>
+        </Tooltip>
         <br /><br />
         {showCollection ? <InformeColeccion data={data} /> : null}
       </Container>

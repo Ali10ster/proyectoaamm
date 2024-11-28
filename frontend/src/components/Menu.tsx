@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState} from '../store/index';
 import { useEffect } from 'react';
+import { Tooltip } from '@mui/material';
 
 export default function menu({ nombre }: { nombre: string }){
     const[open, setOpen] = useState(false)
@@ -53,7 +54,7 @@ export default function menu({ nombre }: { nombre: string }){
     }
     const DrawerList =(
         <List>
-            <ListItem>
+            <Tooltip title="Home" placement='right'>
                 <Link to='/home'>
                 <IconButton>
                     <HomeIcon/>
@@ -62,19 +63,26 @@ export default function menu({ nombre }: { nombre: string }){
                     </Typography>
                 </IconButton>
                 </Link>    
-            </ListItem>
+            </Tooltip>
             <Divider/>
-            <ListItem>
-                <Link to='/reports'>
-                <IconButton>
-                    <ReportIcon />
-                    <Typography>
-                        Reports
-                    </Typography>
-                </IconButton>
+            {role === 'admin' ?
+                <Tooltip title="Reports" placement='right'>
+                         <Link to='/reports'>
+                    <ListItem>
+                        <IconButton>
+                            <ReportIcon />
+                            <Typography>
+                                Reports
+                            </Typography>
+                        </IconButton>
+                    </ListItem>
                 </Link>
-            </ListItem>
-            <Divider/>
+                </Tooltip>
+                :
+                null}
+            <Divider />
+            <Tooltip title="Ayuda" placement='right'>
+            <Link to={'/ManualAyuda.pdf'} target='_blank' style={{textDecoration: 'none'}}>
             <ListItem>
                 <IconButton>
                     <HelpIcon />
@@ -83,7 +91,10 @@ export default function menu({ nombre }: { nombre: string }){
                     </Typography>
                 </IconButton>
             </ListItem>
-            <Divider/>
+            </Link>
+            </Tooltip>
+            <Divider />
+            <Tooltip title="Cerrar sesión" placement='right'>
             <ListItem>
                 <IconButton onClick={handleLogout}>
                     <LogoutIcon />
@@ -92,36 +103,39 @@ export default function menu({ nombre }: { nombre: string }){
                     </Typography>
                 </IconButton>
             </ListItem>
+            </Tooltip>
         </List>
     )
 
-    return(
+    return (
         <>
-                <Toolbar >
-                   <AppBar>
-                    <Grid container direction={{xs: 'column', sm:'row'}} spacing={2} padding={2}  alignItems={'center'}>
-                            <Grid>
-                                <IconButton onClick={handleDrawer} color='secondary'>
-                                    <MenuIcon/>
-                                </IconButton>
-                            </Grid>
-                            <Grid>
-                                <Typography >
-                                    {nombre}
-                                </Typography>
-                            </Grid>
-                            <Grid sx={{marginLeft: {xs: '', sm:'auto', display:'flex'}}} gap={1}>
-                               <Typography>
-                                    {user}
-                                </Typography>
-                                {role === 'admin' ? <Admin/>: <User/>}
-                            </Grid>
+            <Toolbar >
+                <AppBar>
+                    <Grid container direction={{ xs: 'column', sm: 'row' }} spacing={2} padding={2} alignItems={'center'}>
+                        <Grid>
+                           <Tooltip title="Menu">
+                           <IconButton onClick={handleDrawer} color='secondary'>
+                                <MenuIcon />
+                            </IconButton>
+                           </Tooltip>
                         </Grid>
-                   </AppBar>
-                </Toolbar>
-                <Drawer open={open} onClose={handleDrawer}>
-                    {DrawerList}
-                </Drawer>
+                        <Grid>
+                            <Typography >
+                                {nombre}
+                            </Typography>
+                        </Grid>
+                        <Grid sx={{ marginLeft: { xs: '', sm: 'auto', display: 'flex' } }} gap={1}>
+                            <Typography>
+                                {user}
+                            </Typography>
+                            {role === 'admin' ? <Admin /> : <User />}
+                        </Grid>
+                    </Grid>
+                </AppBar>
+            </Toolbar>
+            <Drawer open={open} onClose={handleDrawer}>
+                {DrawerList}
+            </Drawer>
         </>
     )
 }
