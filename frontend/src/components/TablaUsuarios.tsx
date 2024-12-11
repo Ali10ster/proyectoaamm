@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid2';
 import { Box, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 
-export default function GestionUsuarios() {
+export default function TablaUsuarios() {
     /**
      * Definicion de variables y tipos
      */

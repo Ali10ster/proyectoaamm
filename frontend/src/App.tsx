@@ -3,8 +3,9 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Reports from './pages/Reports';
 import ErrorPage from './pages/ErrorPage';
+import GestionUsuarios from './pages/GestionUsuarios';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import GestionUsuarios from './components/TablaUsuarios';
+
 
 
 function App() {

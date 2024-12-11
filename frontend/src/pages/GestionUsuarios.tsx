@@ -1,12 +1,13 @@
+import Menu from "../components/Menu.tsx";
+import TablaUsuarios from "../components/TablaUsuarios.tsx";
 
-import Menu from "../components/Menu";
-import TablaUsuarios from '../components/TablaUsuarios';
-export default function GestionUsuarios() {
-    return(
-        
+function GestionUsuarios() {
+  return (
     <>
-    <Menu nombre="Gestion Usuarios"/>
-    <TablaUsuarios/>
+      <Menu page="Gestión usuarios" />
+      <TablaUsuarios />
     </>
-    )
+  );
 }
+
+export default GestionUsuarios;

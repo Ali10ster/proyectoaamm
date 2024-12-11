@@ -11,6 +11,8 @@ import DeleteForever from '@mui/icons-material/DeleteForever';
 import { useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Box, TextField } from '@mui/material';
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import Paper from '@mui/material/Paper';
 
 export default function Dashboard() {
@@ -19,6 +21,7 @@ export default function Dashboard() {
      */
     const [inicio, setInicio] = useState(true);
     const [tableData, setTableData] = useState<itemType[]>([])
+    const userData = useSelector((state: RootState) => state.authenticator);
 
     interface itemType {
         id?: number
@@ -59,7 +62,6 @@ export default function Dashboard() {
     }
 
     async function handleDeleteItem(row: itemType) {
-        alert('Datos eliminados con éxito')
         fetch(`http://localhost:3030/deleteItem?id=${row.id}`)
             .then(response => response.json())
             .then(response => {
@@ -88,7 +90,6 @@ export default function Dashboard() {
 
     /**
      * Funciones de cambio de estado del item 
-     * 
      */
     const handleChangeName = (e: any) => {
         setItem({
@@ -165,11 +166,11 @@ export default function Dashboard() {
                                         <TableCell>{row.marca}</TableCell>
                                         <TableCell>{row.tipo}</TableCell>
                                         <TableCell>{row.precio}</TableCell>
-                                        <TableCell>
+                                        {userData.userRol === "admin" ?
                                             <Button onClick={() => handleDeleteItem(row)}>
                                                 <DeleteForever />
                                             </Button>
-                                        </TableCell>
+                                        : null}
                                     </TableRow>
                                 ))}
                             </TableBody>
