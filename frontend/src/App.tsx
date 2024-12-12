@@ -3,7 +3,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Reports from './pages/Reports';
 import ErrorPage from './pages/ErrorPage';
-import GestionUsuarios from './pages/GestionUsuarios';
+import GestionPrestamos from './pages/GestionPrestamos';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 
@@ -28,8 +28,8 @@ function App() {
     element: <Reports/>
   },
   {
-    path: 'gestionusuarios',
-    element: <GestionUsuarios/>
+    path: 'gestionprestamos',
+    element: <GestionPrestamos/>
   }
 ]
 },

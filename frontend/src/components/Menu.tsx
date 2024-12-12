@@ -22,6 +22,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettingsIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { authActions } from "../store/authSlice.ts";
@@ -77,18 +78,16 @@ function Menu(props: MenuProps) {
             </ListItem>
           </Link>
           : null}
-        {userData.userRol === "admin" ?
-          <Link to="/gestionusuarios" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link to="/gestionprestamos" style={{ textDecoration: "none", color: "inherit" }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary="Gestión usuarios" />
+                <ListItemText primary="Gestión Préstamos" />
               </ListItemButton>
             </ListItem>
           </Link>
-          : null}
       </List>
       <Divider />
       <List>
@@ -137,7 +136,7 @@ function Menu(props: MenuProps) {
               disableRipple
             >
               {(userData.userRol === "admin") ? <AdminPanelSettingsRoundedIcon /> :
-                (userData.userRol === "user") ? <AdbIcon /> : <InsertEmoticonIcon />}
+                (userData.userRol === "user") ? <InsertEmoticonIcon /> :null}
               <Typography variant="body1" sx={{ ml: 2 }}>
                 {userData.userName}
               </Typography>

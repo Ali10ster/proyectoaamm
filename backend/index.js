@@ -4,7 +4,7 @@ const cors = require('cors')
 //importo el fichero login.js que está en la carpeta services
 const login = require('./services/login')
 const items = require('./services/items')
-const itemsUsers = require('./services/itemsUser')
+const itemsPrestamos = require('./services/itemsPrestamos')
 
 //Definimos el puerto por que va a escuchar nuestra API las peticiones
 const port  = 3030
@@ -64,25 +64,25 @@ app.get('/deleteItem', async function(req, res, next) {
       next(err);
   }
 })
-app.get('/addItemUsers', async function(req, res, next) {
+app.get('/addItemsPrestamos', async function(req, res, next) {
     try {
-        res.json(await itemsUsers.insertDataUsers(req, res))
+        res.json(await itemsPrestamos.insertDataPrestamos(req, res))
     } catch (err) {
         console.error(`Error while getting data `, err.message);
         next(err);
     }
   })
-  app.get('/getItemsUsers', async function(req, res, next) {
+  app.get('/getItemsPrestamos', async function(req, res, next) {
     try {
-        res.json(await itemsUsers.getDataUsers(req, res))
+        res.json(await itemsPrestamos.getDataPrestamos(req, res))
     } catch (err) {
         console.error(`Error while getting data `, err.message);
         next(err);
     }
   })
-  app.get('/deleteItemUsers', async function(req, res, next) {
+  app.get('/deleteItemPrestamos', async function(req, res, next) {
     try {
-        res.json(await itemsUsers.deleteDataUsers(req, res))
+        res.json(await itemsPrestamos.deleteDataPrestamos(req, res))
     } catch (err) {
         console.error(`Error while getting data `, err.message);
         next(err);

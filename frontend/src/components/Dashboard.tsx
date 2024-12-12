@@ -141,9 +141,15 @@ export default function Dashboard() {
                     <Grid>
                         <TextField required label='Precio' type='number' onChange={handleChangePrecio} value={item.precio}/>
                     </Grid>
+                    {userData.userRol === "admin" ?
                     <Button variant='contained' type="submit">
                         Insertar dato
                     </Button>
+                    : userData.userRol === "user" ?
+                    <Button variant='contained' type="submit" disabled>
+                    Insertar dato
+                </Button>
+                :null}
                 </Grid>
             </Box>
             <Grid container direction={'column'} spacing={2} sx={{ marginTop: { xs: '10px' } }} >

@@ -12,8 +12,9 @@ import { useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Box, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
-
-export default function TablaUsuarios() {
+import { useSelector } from 'react-redux';
+import { RootState } from '@reduxjs/toolkit/query';
+export default function TablaPrestamos() {
     /**
      * Definicion de variables y tipos
      */
@@ -22,20 +23,19 @@ export default function TablaUsuarios() {
 
     interface itemType {
         id?: number
-        nombre: string
-        login: string
-        password: string
-        rol: string
+        articulo: string
+        persona: string
+        fecha: string
     }
 
     const itemInitialState: itemType = {
-        nombre: '',
-        login: '',
-        password: '',
-        rol: ''
+        articulo: '',
+        persona: '',
+        fecha: ''
     }
 
     const [item, setItem] = useState(itemInitialState)
+    const userData = useSelector((state: RootState) => state.authenticator);
 
     /**
      * Cargado de datos
@@ -51,7 +51,7 @@ export default function TablaUsuarios() {
      * Funciones relacionadas a los datos
      */
     async function getData() {
-        fetch(`http://localhost:3030/getItemsUsers`)
+        fetch(`http://localhost:3030/getItemsPrestamos`)
             .then(response => response.json())
             .then(response => {
                 setTableData(response.data)
@@ -60,7 +60,7 @@ export default function TablaUsuarios() {
 
     async function handleInsertItem(e: any) {
         e.preventDefault()
-        fetch(`http://localhost:3030/addItemUsers?nombre=${item.nombre}&login=${item.login}&password=${item.password}&rol=${item.rol}`)
+        fetch(`http://localhost:3030/addItemsPrestamos?articulo=${item.articulo}&persona=${item.persona}&fecha=${item.fecha}`)
             .then(response => response.json())
             .then(response => {
                 if (response === 1) {
@@ -79,31 +79,24 @@ export default function TablaUsuarios() {
      * Funciones de cambio de estado del item 
      * 
      */
-    const handleChangeName = (e: any) => {
+    const handleChangeArticulo = (e: any) => {
         setItem({
             ...item,
-            nombre: e.target.value
+            articulo: e.target.value
         })
     }
 
-    const handleChangeLogin = (e: any) => {
+    const handleChangePersona = (e: any) => {
         setItem({
             ...item,
-            login: e.target.value
+            persona: e.target.value
         })
     }
 
-    const handleChangePassword = (e: any) => {
+    const handleChangeFecha = (e: any) => {
         setItem({
             ...item,
-            password: e.target.value
-        })
-    }
-
-    const handleChangeRol = (e: any) => {
-        setItem({
-            ...item,
-            rol: e.target.value
+            fecha: e.target.value
         })
     }
 
@@ -116,43 +109,40 @@ export default function TablaUsuarios() {
         
             <Paper elevation={10} sx={{padding: 2}} square={false}>
             <Box component={'form'} onSubmit={handleInsertItem}>
+            {userData.userRol === "admin" ?
                 <Grid container alignContent={'center'} justifyContent={'center'} marginTop={2} direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, sm: 5.5 }}>
                     <Grid>
-                        <TextField required label='Nombre' onChange={handleChangeName} value={item.nombre}/>
+                        <TextField required label='Articulo' onChange={handleChangeArticulo} value={item.articulo}/>
                     </Grid>
                     <Grid>
-                        <TextField required label='Usuario' onChange={handleChangeLogin} value={item.login}/>
+                        <TextField required label='Persona' onChange={handleChangePersona} value={item.persona}/>
                     </Grid>
                     <Grid>
-                        <TextField required label='Contraseña' onChange={handleChangePassword} value={item.password}/>
-                    </Grid>
-                    <Grid>
-                        <TextField required label='rol' onChange={handleChangeRol} value={item.rol}/>
+                        <TextField required type='date' onChange={handleChangeFecha} value={item.fecha}/>
                     </Grid>
                     <Button variant='contained' type="submit">
-                        Insertar usuario
+                        Crear prestamo
                     </Button>
                 </Grid>
+                :null}
             </Box>
             <Grid container direction={'column'} spacing={2} sx={{ marginTop: { xs: '10px' } }} >
                 <Grid sx={{ maxWidth: '100%', overflowX: 'auto' }}>
                     <TableContainer >
-                        <Table aria-label='Tabla de Usuarios'>
+                        <Table aria-label='Tabla de Prestamos'>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell >Nombre</TableCell>
-                                    <TableCell>Usuario</TableCell>
-                                    <TableCell>Contraseña</TableCell>
-                                    <TableCell>Rol</TableCell>
+                                    <TableCell >Articulo</TableCell>
+                                    <TableCell>Persona</TableCell>
+                                    <TableCell>Fecha</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {tableData.map((row: itemType) => (
                                     <TableRow key={row.id}>
-                                        <TableCell>{row.nombre}</TableCell>
-                                        <TableCell>{row.login}</TableCell>
-                                        <TableCell>{row.password}</TableCell>
-                                        <TableCell>{row.rol}</TableCell>
+                                        <TableCell>{row.articulo}</TableCell>
+                                        <TableCell>{row.persona}</TableCell>
+                                        <TableCell>{row.fecha}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
